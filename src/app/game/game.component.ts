@@ -7,6 +7,15 @@ import { Subscription, interval } from 'rxjs';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent {
+
+  audio: HTMLAudioElement;
+
+  constructor() {
+    this.audio = new Audio();
+    this.audio.src = '../../assets/slotRoll.mp3'; // Passe den Pfad entsprechend an
+    this.audio.preload = 'auto';
+  }
+
   private images: string[] = [
     '1.png',
     '2.png',
@@ -14,11 +23,9 @@ export class GameComponent {
     '4.png',
     '5.png'
   ];
-  imageBox1: string;
-  imageBox2: string;
-  imageBox3: string;
-
-
+  imageBox1: string = "../../assets/2.png" ;
+  imageBox3: string = "../../assets/2.png"
+  imageBox2: string = "../../assets/2.png"
 
   async startSlider() {
     for (let i = 0; i < this.getRandomInt(6, 10); i++) {
@@ -26,10 +33,11 @@ export class GameComponent {
       this.imageBox2 = "../../assets/" + this.images[this.getRandomInt(0, 4)]
       this.imageBox3 = "../../assets/" + this.images[this.getRandomInt(0, 4)]
       await this.delay(200);
+      this.audio.currentTime = 0;
+      await this.audio.play();
     }
 
   }
-
 
 
   getRandomInt(min: number, max: number): number {
